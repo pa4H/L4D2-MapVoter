@@ -11,6 +11,6 @@ __!votemap__
 __!mv__  
 __!rtv__  
 ##
-Compiled on SourceMod 1.10.
+Compiled on SourceMod 1.11.
 
 [Developer](https://vk.com/pa4h1337)
