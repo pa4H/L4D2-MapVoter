@@ -14,12 +14,12 @@
 	}
 	"SelectMap"
 	{
-		"en"			"Select campaign:"	
-		"ru"			"Выберите кампанию:"
+		"en"			"Next campaign:"	
+		"ru"			"Следующая кампания:"
 	}
 	"VoteOnlyOnFinal"
 	{
-		"en"			"You can vote only on final map"	
+		"en"			"{green}You can vote only on final map"	
 		"ru"			"{green}Голосование проводится только на последней карте"
 	}
 	"VoteWinner"
@@ -37,8 +37,24 @@
 	"VoteStoped"
 	{
 		"#format"		"{1:s}"
-		"en"			"{olive}ГVoting is completed. Next campaign: {green}{1}"	
-		"ru"			"{olive}Голосование завершено. Следующая кампания: {green}{1}"
+		"en"			"{olive}Voting is completed. Next campaign {green}{1}"	
+		"ru"			"{olive}Голосование завершено. Следующая кампания {green}{1}"
+	}
+	"VotedFor"
+	{
+		"#format"		"{1:s}"
+		"en"			"You voted for {green}{1}"	
+		"ru"			"Вы проголосовали за {green}{1}"
+	}
+	"VoteCancel"
+	{
+		"en"			"You didn't vote. {green}!mapvote {default}for start vote for next map"	
+		"ru"			"Вы не проголосовали. {green}!mapvote {default}чтобы проголосовать за следующую карту"
+	}
+	"PlayerCantVote"
+	{
+		"en"			"You have already voted"	
+		"ru"			"Вы уже проголосовали"
 	}
 	
 	"c1m1_hotel"
@@ -59,7 +75,7 @@
 	"c4m1_milltown_a"
 	{
 		"en"			"Hard Rain"	
-		"ru"			"Ужасный дождь"
+		"ru"			"Ужасный ливень"
 	}
 	"c5m1_waterfront"
 	{
@@ -79,7 +95,7 @@
 	"c8m1_apartment"
 	{
 		"en"			"No Mercy"	
-		"ru"			"Нет милосердию"
+		"ru"			"Нет Милосердию"
 	}
 	"c9m1_alleys"
 	{
