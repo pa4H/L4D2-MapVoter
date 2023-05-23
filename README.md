@@ -12,5 +12,5 @@ __!mv__
 __!rtv__  
 ##
 Compiled on SourceMod 1.11.
-
+Colors.inc for plugin compilation.
 [Developer](https://vk.com/pa4h1337)
