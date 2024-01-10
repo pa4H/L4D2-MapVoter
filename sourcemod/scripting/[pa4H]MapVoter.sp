@@ -8,6 +8,7 @@ int winner = 0; // Номер карты, которая победила в г�
 int clientVotes[14]; // В массиве содержатся голоса за каждую карту
 bool canPlayerVote[MAXPLAYERS + 1]; // В массиве содержатся игроки которым можно\нельзя голосовать
 bool canVote = true;
+int loadedPlayers = 0;
 
 native void L4D2_ChangeLevel(const char[] sMap); // changelevel.smx
 
@@ -30,20 +31,62 @@ char mapSequence[][32] =  {  // Последовательность карт
 public void OnPluginStart()
 {
 	//RegAdminCmd("sm_mapresult", mapVoteResult, ADMFLAG_BAN);
-	
+	//RegConsoleCmd("sm_test", testFunc, "");
 	RegConsoleCmd("sm_mapvote", mapVote);
 	RegConsoleCmd("sm_votemap", mapVote);
 	RegConsoleCmd("sm_mv", mapVote);
 	RegConsoleCmd("sm_rtv", mapVote);
 	
-	HookEvent("versus_round_start", Event_VersusRoundStart, EventHookMode_Pre); // Начало раунда
-	HookEvent("versus_match_finished", Event_VersusMatchFinished, EventHookMode_Pre); // Конец раунда
+	//HookEvent("versus_round_start", Event_VersusRoundStart, EventHookMode_Pre); // Открыли дверь
+	HookEvent("versus_match_finished", Event_VersusMatchFinished, EventHookMode_Pre); // Конец финальной карты
 	
 	LoadTranslations("pa4HMapVoter.phrases");
 	BuildPath(Path_SM, DropLP, sizeof(DropLP), "logs/MapVoter.log"); // debug
 }
-
-public void Event_VersusRoundStart(Event hEvent, const char[] sEvName, bool bDontBroadcast) // Срабатывает после выхода из saferoom
+stock Action testFunc(int client, int args) // DEBUG
+{
+	
+	return Plugin_Handled;
+}
+public OnClientPostAdminCheck(client)
+{
+	if (IsValidClient(client)) {
+		loadedPlayers++;
+		LogToFileEx(DropLP, "Cliconnect: %i online: %i", loadedPlayers, GetOnlineClients());
+	}
+	
+	if (loadedPlayers >= GetOnlineClients() && L4D_IsMissionFinalMap() && GameRules_GetProp("m_bInSecondHalfOfRound") == 0) // Если играем последную карту и идёт первая половина карты
+	{
+		loadedPlayers = 0;
+		canVote = true;
+		CreateTimer(30.0, Timer_EndVote); // Создаем таймер после которого закончится голосование
+		
+		PrecacheSound("ui/beep_synthtone01.wav");
+		EmitSoundToAll("ui/beep_synthtone01.wav");
+		
+		clearVotes(); // Очищаем все голоса
+		for (int i = 1; i <= MaxClients; i++)
+		{
+			if (IsValidClient(i))
+			{
+				showMenu(i); // Показываем меню всем
+			}
+		}
+	}
+}
+public void OnMapEnd() // Требуется, поскольку принудительная смена карты не вызывает событие "round_end"
+{
+	loadedPlayers = 0;
+}
+stock int GetOnlineClients()
+{
+	int cl;
+	for (int i = 1; i <= MaxClients; i++) {
+		if (i > 0 && i <= MaxClients && IsClientConnected(i) && !IsFakeClient(i)) { cl++; }
+	}
+	return cl;
+}
+/*public void Event_VersusRoundStart(Event hEvent, const char[] sEvName, bool bDontBroadcast) // Срабатывает после выхода из saferoom
 {
 	if (L4D_IsMissionFinalMap() && GameRules_GetProp("m_bInSecondHalfOfRound") == 0) // Если играем последную карту и идёт первая половина карты
 	{
@@ -63,10 +106,11 @@ public void Event_VersusRoundStart(Event hEvent, const char[] sEvName, bool bDon
 		}
 	}
 }
-
+*/
 public Action Timer_EndVote(Handle hTimer, any UserId)
 {
 	canVote = false;
+	loadedPlayers = 0;
 	
 	int buf = 0;
 	winner = 0;
@@ -81,7 +125,7 @@ public Action Timer_EndVote(Handle hTimer, any UserId)
 		{
 			FormatEx(mapRealName, sizeof(mapRealName), "%T", mapSequence[winner], i);
 			CPrintToChat(i, "%t", "VoteWinner", mapRealName); // Выводим в чат победившую карту
-			LogToFileEx(DropLP, "VoteWinner: %s", mapRealName); // debug
+			//LogToFileEx(DropLP, "VoteWinner: %s", mapRealName); // debug
 		}
 	}
 	return Plugin_Stop;
@@ -183,7 +227,7 @@ public Menu_VotePoll(Menu menu, MenuAction action, int client, int param2) // О
 		canPlayerVote[client] = false;
 		FormatEx(mapRealName, sizeof(mapRealName), "%T", mapSequence[sel], client);
 		CPrintToChat(client, "%t", "VotedFor", mapRealName);
-		LogToFileEx(DropLP, "Cl: %i; indx: %d; mapName: %s", client, param2, szInfo); // debug
+		//LogToFileEx(DropLP, "Cl: %i; indx: %d; mapName: %s", client, param2, szInfo); // debug
 	}
 	else if (action == MenuAction_Cancel && param2 == -3) // Если нажали Выход
 	{
