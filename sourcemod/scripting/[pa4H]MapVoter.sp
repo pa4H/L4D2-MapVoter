@@ -12,7 +12,7 @@ int loadedPlayers = 0;
 
 native void L4D2_ChangeLevel(const char[] sMap); // changelevel.smx
 
-char DropLP[PLATFORM_MAX_PATH]; // debug
+//char DropLP[PLATFORM_MAX_PATH]; // debug
 
 public Plugin myinfo =  {
 	name = "MapVoter", 
@@ -41,18 +41,17 @@ public void OnPluginStart()
 	HookEvent("versus_match_finished", Event_VersusMatchFinished, EventHookMode_Pre); // Конец финальной карты
 	
 	LoadTranslations("pa4HMapVoter.phrases");
-	BuildPath(Path_SM, DropLP, sizeof(DropLP), "logs/MapVoter.log"); // debug
+	//BuildPath(Path_SM, DropLP, sizeof(DropLP), "logs/MapVoter.log"); // debug
 }
 stock Action testFunc(int client, int args) // DEBUG
 {
-	
 	return Plugin_Handled;
 }
 public OnClientPostAdminCheck(client)
 {
 	if (IsValidClient(client)) {
 		loadedPlayers++;
-		LogToFileEx(DropLP, "Cliconnect: %i online: %i", loadedPlayers, GetOnlineClients());
+		//LogToFileEx(DropLP, "Cliconnect: %i online: %i", loadedPlayers, GetOnlineClients());
 	}
 	
 	if (loadedPlayers >= GetOnlineClients() && L4D_IsMissionFinalMap() && GameRules_GetProp("m_bInSecondHalfOfRound") == 0) // Если играем последную карту и идёт первая половина карты
@@ -128,6 +127,7 @@ public Action Timer_EndVote(Handle hTimer, any UserId)
 			//LogToFileEx(DropLP, "VoteWinner: %s", mapRealName); // debug
 		}
 	}
+	resultsToConsole();
 	return Plugin_Stop;
 }
 
@@ -273,6 +273,15 @@ public Action mapVote(int client, int args) // !mapvote
 		CPrintToChat(client, "%t", "VoteStoped", mapRealName);
 	}
 	return Plugin_Handled;
+}
+
+void resultsToConsole()
+{
+	PrintToConsoleAll("Map Winner: %s", mapSequence[winner]);
+	for (int i = 0; i < 14; i++)
+	{
+		PrintToConsoleAll("%s: %i", mapSequence[i], clientVotes[i]);	
+	}
 }
 
 stock Action mapVoteResult(int client, int args)
