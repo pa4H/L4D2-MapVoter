@@ -37,8 +37,8 @@
 	"VoteStoped"
 	{
 		"#format"		"{1:s}"
-		"en"			"{olive}Next campaign {green}{1}"	
-		"ru"			"{olive}Следующая кампания {green}{1}"
+		"en"			"{olive}Voting is completed. Next campaign {green}{1}"	
+		"ru"			"{olive}Голосование завершено. Следующая кампания {green}{1}"
 	}
 	"VotedFor"
 	{
@@ -53,23 +53,8 @@
 	}
 	"PlayerCantVote"
 	{
-		"en"			"{green}You have already {olive}voted"	
-		"ru"			"{green}Вы уже {olive}проголосовали"
-	}
-	"RevoteStart"
-	{
-		"en"			"{olive}Re-voting {green}for the map has begun"	
-		"ru"			"{green}Началось повторное {olive}голосование {default}за карту"
-	}
-	"cantRevote"
-	{
-		"en"			"{green}Re-voting {olive}disabled"	
-		"ru"			"{green}Повторное голосование {olive}отключено"
-	}
-	"noRevote"
-	{
-		"en"			"{green}You can {olive}no {default}longer vote again"	
-		"ru"			"{green}Повторно голосовать {default}больше {olive}нельзя"
+		"en"			"You have already voted"	
+		"ru"			"Вы уже проголосовали"
 	}
 	
 	"c1m1_hotel"
@@ -141,64 +126,5 @@
 	{
 		"en"			"The Last Stand"	
 		"ru"			"Последний рубеж"
-	}
-	
-	// Final map > First map
-	
-	"c1m4_atrium"
-	{
-		"en"			"c1m1_hotel"	
-	}
-	"c2m5_concert"
-	{
-		"en"			"c2m1_highway"	
-	}
-	"c3m4_plantation"
-	{
-		"en"			"c3m1_plankcountry"	
-	}
-	"c4m5_milltown_escape"
-	{
-		"en"			"c4m1_milltown_a"	
-	}
-	"c5m5_bridge"
-	{
-		"en"			"c5m1_waterfront"	
-	}
-	"c6m3_port"
-	{
-		"en"			"c6m1_riverbank"	
-	}
-	"c7m3_port"
-	{
-		"en"			"c7m1_docks"	
-	}
-	"c8m5_rooftop"
-	{
-		"en"			"c8m1_apartment"	
-	}
-	"c9m2_lots"
-	{
-		"en"			"c9m1_alleys"	
-	}
-	"c10m5_houseboat"
-	{
-		"en"			"c10m1_caves"	
-	}
-	"c11m5_runway"
-	{
-		"en"			"c11m1_greenhouse"	
-	}
-	"c12m5_cornfield"
-	{
-		"en"			"c12m1_hilltop"	
-	}
-	"c13m4_cutthroatcreek"
-	{
-		"en"			"c13m1_alpinecreek"	
-	}
-	"c14m2_lighthouse"
-	{
-		"en"			"c14m1_junkyard"
 	}
 }
